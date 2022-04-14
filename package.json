@@ -1,6 +1,6 @@
 {
   "name": "nexered",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Next.js config redirect export for cloudflare",
   "repository": "github:varanauskas/nexered",
   "author": "Tadas Varanauskas <tadas@varanauskas.lt>",
