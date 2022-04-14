@@ -5,7 +5,7 @@
   "repository": "github:varanauskas/nexered",
   "author": "Tadas Varanauskas <tadas@varanauskas.lt>",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "scripts": {
     "build": "tsc",
     "cleanup": "rm -rf ./dist",
