@@ -24,16 +24,14 @@ configuration for those third party hosting providers.
     npm install nexered
     ```
 
-2. Update your build script in `package.json`
-
-```diff
- {
-   "scripts": {
--    "build": "next build && next export"
-+    "build": "next build && next export && nexered --provider=cloudflare-pages"
-   }
- }
-```
+2. Add `nexered` to the `postbuild` [(or the `post-` script of the static export script if it's named differently)](https://docs.npmjs.com/cli/v6/using-npm/scripts#pre--post-scripts) step in `package.json`
+    ```diff
+    {
+        "scripts": {
+            "postexport": "nexered --provider=cloudflare-pages"
+        }
+    }
+    ```
 
 3. ...
 

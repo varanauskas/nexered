@@ -1,12 +1,13 @@
 {
   "name": "nexered",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Next.js config redirect export for cloudflare",
   "repository": "github:varanauskas/nexered",
   "author": "Tadas Varanauskas <tadas@varanauskas.lt>",
   "license": "MIT",
   "private": false,
   "scripts": {
+    "test": "jest",
     "build": "tsc",
     "cleanup": "rm -rf ./dist",
     "prepack": "npm run cleanup && npm run build"

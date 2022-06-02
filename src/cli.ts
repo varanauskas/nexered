@@ -1,7 +1,7 @@
 import yargs from "yargs";
 import { main, providers } from ".";
 
-export const { argv } = yargs
+const { argv } = yargs
     .usage('$0 --p=cloudflare-pages')
     .options({
         'p': { choices: Object.keys(providers) as (keyof typeof providers)[], demandOption: true, alias: 'provider', description: 'hosting provider type' },

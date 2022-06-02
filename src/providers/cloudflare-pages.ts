@@ -5,28 +5,32 @@ import { writeFile, mkdir } from "fs/promises";
 import { join } from "path";
 
 type Paths = { source: string, destination: string };
-function cloudflarePaths(paths: Paths): Paths {
+function cloudflarePaths(paths: Paths): Paths[] {
     const { source, destination } = paths;
     const wildcardMatch = source.match(/(:[^\/]+\*)$/);
-    if (!wildcardMatch || wildcardMatch.length === 0) return paths;
+    // Adding another redirect with trailing `/`
+    // as Cloudflare Pages uses explicit trailing `/`
+    // while Next.js ignores them when routing
+    if (!wildcardMatch || wildcardMatch.length === 0)
+        return [paths, { source: `${source}/`, destination}];
     const [wildcard] = wildcardMatch;
-    return {
+    return [{
         source: source.replace(wildcard, '*'),
         destination: destination.replace(wildcard, ':splat')
-    };
+    }];
 }
 
 // https://developers.cloudflare.com/pages/platform/redirects/
 function cloudflareRedirect({
     permanent,
     statusCode = permanent ? PERMANENT_REDIRECT_STATUS : TEMPORARY_REDIRECT_STATUS,
-    ...redirect }: NextRedirect): string {
-    const { source, destination } = cloudflarePaths(redirect);
-    return `${source} ${destination} ${statusCode}`;
+    ...redirect }: NextRedirect): string[] {
+    const paths = cloudflarePaths(redirect);
+    return paths.map(({ source, destination }) => `${source} ${destination} ${statusCode}`);
 }
 
 const cloudflareRedirects = (redirects: NextRedirect[]): string => redirects
-    .map(cloudflareRedirect)
+    .flatMap(cloudflareRedirect)
     .join('\n');
 
 export const addRedirects: AddProviderRedirects = async (config, { outputDir }) => {
