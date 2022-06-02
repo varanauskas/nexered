@@ -28,7 +28,7 @@ configuration for those third party hosting providers.
     ```diff
     {
         "scripts": {
-            "postexport": "nexered --provider=cloudflare-pages"
+            "postbuild": "nexered --provider=cloudflare-pages"
         }
     }
     ```
